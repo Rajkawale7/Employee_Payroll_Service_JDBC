@@ -2,6 +2,7 @@ package com.bridgelabz;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class EmployeePayrollService {
@@ -81,6 +82,36 @@ public class EmployeePayrollService {
         return null;
     }
 
+    //JDBC UC-6
+    public Map<String, Double> readAverageSalaryByGender(IOService ioService) {
+        if(ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getAverageSalaryByGender();
+        return null;
+    }
+
+    public Map<String, Double> readSalarySumByGender(IOService ioService) {
+        if(ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getSalarySumByGender();
+        return null;
+    }
+
+    public Map<String, Double> readMinSalaryByGender(IOService ioService) {
+        if(ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getMinSalaryByGender();
+        return null;
+    }
+
+    public Map<String, Double> readMaxSalaryByGender(IOService ioService) {
+        if(ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getMaxSalaryByGender();
+        return null;
+    }
+
+    public Map<String, Integer> readCountSalaryByGender(IOService ioService) {
+        if(ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getCountSalaryByGender();
+        return null;
+    }
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
