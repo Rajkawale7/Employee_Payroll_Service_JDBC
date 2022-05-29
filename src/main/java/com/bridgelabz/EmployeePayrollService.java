@@ -1,4 +1,5 @@
 package com.bridgelabz;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -71,6 +72,13 @@ public class EmployeePayrollService {
         if (ioService.equals(IOService.FILE_IO))
             this.employeePayrollList = new EmployeePayrollFileIOService().readData();
         return employeePayrollList.size();
+    }
+
+    //JDBC UC-5
+    public List<EmployeePayrollData> readEmployeePayrollDataForDateRange(IOService ioService, LocalDate startDate, LocalDate endDate) {
+        if(ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getEmployeePayrollForDateRange(startDate,endDate);
+        return null;
     }
 
     public static void main(String[] args) {

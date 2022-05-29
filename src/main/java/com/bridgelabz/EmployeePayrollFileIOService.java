@@ -24,6 +24,27 @@ public class EmployeePayrollFileIOService {
         }
     }
 
+    //UC5 Ability for Employee Payroll Service to print the Employee Payrolls
+    public void printData(){
+        try{
+            Files.lines(new File(PAYROLL_FILE_NAME).toPath())
+                    .forEach(System.out::println);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public long countEntries() {
+        long entries = 0;
+        try {
+            entries = Files.lines(new File(PAYROLL_FILE_NAME).toPath()).count();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        return entries;
+    }
+
+
     public List<EmployeePayrollData> readData() {
         List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         try{

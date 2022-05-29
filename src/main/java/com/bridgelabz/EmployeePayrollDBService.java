@@ -60,6 +60,12 @@ public class EmployeePayrollDBService {
         return employeePayrollList;
     }
 
+    //JDBC UC-5
+    public List<EmployeePayrollData> getEmployeePayrollForDateRange(LocalDate startDate, LocalDate endDate) {
+        String sql = String.format("select * from employee_payroll table WHERE start BETWEEN '%s' AND '%s';",Date.valueOf(startDate),Date.valueOf(endDate));
+        return this.getEmployeePayrollDataUsingDB(sql);
+    }
+
     // UC 2
     private List<EmployeePayrollData> getEmployeePayrollDataUsingDB(String sql) {
         List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
