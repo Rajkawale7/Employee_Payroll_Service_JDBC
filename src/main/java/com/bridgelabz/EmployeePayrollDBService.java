@@ -28,6 +28,38 @@ public class EmployeePayrollDBService {
         return connection;
     }
 
+    public List<EmployeePayrollData> readData() {
+        String sql = "SELECT * FROM employee_payroll;";
+        return this.getEmployeePayrollDataUsingDB(sql);
+    }
+    public int updateEmployeeData(String name, double salary) {
+        return this.updateEmployeeDataUsingPreparedStatement(name,salary);
+    }
+    private int updateEmployeeDataUsingPreparedStatement(String name, double salary) {
+        String sql = String.format("UPDATE employee_payroll SET salary = %.2f WHERE name = '%s';",salary,name);
+        try(Connection connection = this.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(sql);
+            return statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<EmployeePayrollData> getEmployeePayrollData(String name) {
+        List<EmployeePayrollData> employeePayrollList = null;
+        if(this.employeePayrollDataStatement == null)
+            this.prepareStatementForEmployeeData();
+        try{
+            employeePayrollDataStatement.setString(1,name);
+            ResultSet resultSet = employeePayrollDataStatement.executeQuery();
+            employeePayrollList = this.getEmployeePayrollData(resultSet);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return employeePayrollList;
+    }
+
     // UC 2
     private List<EmployeePayrollData> getEmployeePayrollDataUsingDB(String sql) {
         List<EmployeePayrollData> employeePayrollList = new ArrayList<>();

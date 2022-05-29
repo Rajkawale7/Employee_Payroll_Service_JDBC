@@ -28,6 +28,51 @@ public class EmployeePayrollService {
         return this.employeePayrollList;
     }
 
+    //JDBC UC -3
+    public void updateEmployeeSalary(String name, double salary) {
+        int result = employeePayrollDBService.updateEmployeeData(name,salary);
+        if(result == 0)
+            return;
+        EmployeePayrollData employeePayrollData = this.getEmployeePayrollData(name);
+        if(employeePayrollData != null)
+            employeePayrollData.salary = salary;
+    }
+
+    private EmployeePayrollData getEmployeePayrollData(String name) {
+        return this.employeePayrollList.stream()
+                .filter(employeePayrollDataItem -> employeePayrollDataItem.name.equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public boolean checkEmployeePayrollInSyncWithDB(String name) {
+        List<EmployeePayrollData> employeePayrollDataList = employeePayrollDBService.getEmployeePayrollData(name);
+        return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
+    }
+
+    public void readEmployeePayrollData(Scanner consoleInputReader) {
+        System.out.println("Enter Employee ID");
+        int id = consoleInputReader.nextInt();
+        System.out.println("Enter Employee name");
+        String name = consoleInputReader.next();
+        System.out.println("Enter Employee Salary");
+        Double salary = consoleInputReader.nextDouble();
+        employeePayrollList.add(new EmployeePayrollData(id, name, salary));
+    }
+
+    public void writeEmployeePayrollData(IOService ioService) {
+        if (ioService.equals(IOService.CONSOLE_IO))
+            System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
+        else
+            new EmployeePayrollFileIOService().writeData(employeePayrollList);
+    }
+
+    public long readEmployeePayrollData(IOService ioService) {
+        if (ioService.equals(IOService.FILE_IO))
+            this.employeePayrollList = new EmployeePayrollFileIOService().readData();
+        return employeePayrollList.size();
+    }
+
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);

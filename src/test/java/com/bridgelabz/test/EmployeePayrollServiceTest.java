@@ -16,5 +16,16 @@ public class EmployeePayrollServiceTest {
         System.out.println(employeePayrollData);
         Assertions.assertEquals(3,employeePayrollData.size());
     }
+
+    //JDBC UC-3
+    @Test
+    public void givenNewSalaryForEmployee_WhenUpdated_shouldSyncDB(){
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        employeePayrollService.readEmployeePayrollDataDB(DB_IO);
+        employeePayrollService.updateEmployeeSalary("Terissa",500000);
+        boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Terissa");
+        System.out.println(result);
+        Assertions.assertTrue(result);
+    }
 }
 
