@@ -5,7 +5,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Enumeration;
 
-public class EmployeePyrollService {
+public class DatabaseConnection {
     public static void main(String[] args) throws ClassNotFoundException {
         System.out.println("*****WELCOME TO THE PROGRAM ON JAVA DATABASE CONNECTIVITY*****");
         try {
@@ -32,7 +32,6 @@ public class EmployeePyrollService {
         } finally {
         }
     }
-
     private static void listDrivers() {
         Enumeration<Driver> driverList=DriverManager.getDrivers();
 
