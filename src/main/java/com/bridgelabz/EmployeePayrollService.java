@@ -112,6 +112,12 @@ public class EmployeePayrollService {
             return employeePayrollDBService.getCountSalaryByGender();
         return null;
     }
+
+    //JDBC UC-7
+    public void addEmployeeToPayroll(String name, String gender, double salary, LocalDate startDate) {
+        employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name,gender,salary,startDate));
+    }
+
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
